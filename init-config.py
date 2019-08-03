@@ -25,7 +25,7 @@ for file_name in os.listdir(TEMPLATE_DIR):
 
 for template_name in env.list_templates(extensions=["jinja2"]):
     template = env.get_template(template_name)
-    output_name = os.path.join(OUTPUT_DIR, re.sub("\.jinja2$", "", template.name))
+    output_name = os.path.join(OUTPUT_DIR, re.sub("\.jinja2$", "", template_name))
     print("Processing: {}->{}".format(template_name, output_name))
     with open(output_name, "w") as ofile:
         ofile.write(template.render(**os.environ))
