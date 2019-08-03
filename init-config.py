@@ -12,6 +12,10 @@ env = Environment(
     autoescape=select_autoescape(["html", "xml"])
 )
 
+print("Environment variables:")
+for key, value in os.environ.items():
+    print("  {} : {}".format(key, value))
+
 with open(os.path.join(OUTPUT_DIR, "env"), "w") as ofile:
     ofile.write(str(os.environ))
 
@@ -20,6 +24,9 @@ for file_name in os.listdir(TEMPLATE_DIR):
         shutil.copy(os.path.join(TEMPLATE_DIR, file_name), os.path.join(OUTPUT_DIR, file_name))
 
 for template_name in env.list_templates(extensions=["jinja2"]):
+    print("Processing: {}".format(template_name))
     template = env.get_template(template_name)
     with open(os.path.join(OUTPUT_DIR, re.sub("\.jinja2$", "", template.name)), "w") as ofile:
         ofile.write(template.render(**os.environ))
+
+print("Init config terminated")
